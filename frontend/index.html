@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PayPulse AI - Recovery Queue</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Custom Style -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-100">
+
+  <div class="app-container">
+    <div class="mobile-wrapper">
+      
+      <!-- Top Navigation Header -->
+      <header class="dashboard-header flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="store" class="w-5 h-5 text-slate-700"></i>
+        </div>
+        <div class="text-center">
+          <div class="flex items-center justify-center space-x-1.5">
+            <span class="font-extrabold text-slate-800 text-sm tracking-tight">PayPulse AI</span>
+          </div>
+          <div class="flex items-center justify-center space-x-1 mt-0.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="pulse-badge">AI MONITORING</span>
+          </div>
+        </div>
+        <button class="relative p-1.5 text-slate-600 hover:text-slate-900">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full"></span>
+        </button>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50" id="main-content">
+        
+        <!-- Tab: OVERVIEW (Active Default) -->
+        <div id="tab-overview" class="space-y-4">
+          
+          <!-- Greeting Section -->
+          <div>
+            <p class="text-xs text-slate-500 font-medium">Good Morning, Rahul.</p>
+            <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">Here's your recovery pulse.</h1>
+          </div>
+
+          <!-- Hero Metric Card: Revenue at Risk -->
+          <div class="card-risk rounded-2xl p-4 relative shadow-sm">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-xs font-semibold text-slate-600">Revenue at Risk</p>
+                <h2 class="text-3xl font-extrabold risk-amount mt-1" id="val-at-risk">₹38.6L</h2>
+              </div>
+              <div class="p-2 bg-amber-100/80 text-amber-600 rounded-xl">
+                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex items-center space-x-1 mt-2 text-xs font-bold text-amber-600">
+              <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+              <span>12% from yesterday</span>
+            </div>
+          </div>
+
+          <!-- Secondary Metric Cards (Recoverable & Recovered Grid) -->
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm">
+              <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Recoverable</p>
+              <h3 class="text-xl font-extrabold text-sky-600 mt-1" id="val-recoverable">₹28.7L</h3>
+              <p class="text-[11px] text-slate-500 font-medium mt-1">74.3% of at-risk revenue</p>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm">
+              <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Recovered</p>
+              <h3 class="text-xl font-extrabold text-slate-900 mt-1" id="val-recovered">₹21.4L</h3>
+              <p class="text-[11px] text-emerald-600 font-bold mt-1">+8.2% this week</p>
+              <div class="w-full bg-slate-100 h-1 rounded-full my-1.5 overflow-hidden">
+                <div class="bg-emerald-500 h-full w-[65%]"></div>
+              </div>
+              <p class="text-[10px] text-slate-400 font-medium">₹3.2L recovered today</p>
+            </div>
+          </div>
+
+          <!-- Recovery Rate Card with Ring Gauge -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-slate-600">Recovery Rate</p>
+              <h3 class="text-2xl font-extrabold text-slate-900 mt-0.5" id="val-rate">74.6%</h3>
+            </div>
+            <div class="circular-gauge">
+              <span class="gauge-text">+2.4%</span>
+            </div>
+          </div>
+
+          <!-- Pulse AI Insight (CRITICAL Notification Card) -->
+          <div class="critical-box rounded-2xl p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-amber-600 font-bold text-xs">
+                <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
+                <span>Pulse AI Insight</span>
+              </div>
+              <span class="bg-amber-100 text-amber-700 font-extrabold text-[10px] px-2 py-0.5 rounded-full">CRITICAL</span>
+            </div>
+
+            <h4 class="text-sm font-extrabold text-slate-900 leading-snug">
+              UPI payment success rate dropped 12.5% in the last 60 minutes.
+            </h4>
+
+            <p class="text-xs text-slate-600 font-medium">
+              27 transactions eligible for recovery · ₹1.42L expected recovery
+            </p>
+
+            <button onclick="openIncidentModal()" class="flex items-center space-x-1 text-xs font-extrabold text-sky-600 hover:text-sky-700 pt-1">
+              <span>View Incident</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+
+          <!-- Priority Actions -->
+          <div class="space-y-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-800">Priority Actions</h3>
+              <p class="text-[11px] text-sky-600 font-medium">3 recovery opportunities need attention · ₹2.57L potential recovery</p>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">UPI degradation</h4>
+                <p class="text-[11px] text-slate-500 font-medium">₹1.42L recoverable · 27 transactions</p>
+              </div>
+              <button onclick="openIncidentModal('upi_degradation')" class="flex items-center space-x-1 text-xs font-bold text-sky-600 hover:text-sky-700 bg-sky-50 px-3 py-1.5 rounded-xl">
+                <span>Review</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tab: QUEUE (Screen 2 Implementation) -->
+        <div id="tab-queue" class="hidden space-y-4">
+          
+          <!-- Screen 2 Header -->
+          <div class="flex items-start justify-between">
+            <div>
+              <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Recovery Queue</h2>
+              <p class="text-xs text-slate-500 font-medium">AI-prioritized transactions requiring intervention</p>
+            </div>
+            <span class="text-[10px] bg-emerald-50 text-emerald-700 font-extrabold px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Live · 2 min ago
+            </span>
+          </div>
+
+          <!-- Summary Cards (3-Card Grid) -->
+          <div class="grid grid-cols-3 gap-2">
+            <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
+              <div class="flex items-center space-x-1 text-slate-500 text-[10px] font-bold">
+                <i data-lucide="clock" class="w-3 h-3 text-sky-600"></i>
+                <span>Pending Actions</span>
+              </div>
+              <div class="text-xl font-extrabold text-slate-900 mt-1">27</div>
+              <div class="text-[10px] text-sky-600 font-bold">₹2.57L potential</div>
+            </div>
+
+            <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
+              <div class="flex items-center space-x-1 text-slate-500 text-[10px] font-bold">
+                <i data-lucide="alert-circle" class="w-3 h-3 text-amber-500"></i>
+                <span>High Priority</span>
+              </div>
+              <div class="text-xl font-extrabold text-slate-900 mt-1">8</div>
+              <div class="text-[10px] text-amber-600 font-bold">₹1.42L at risk</div>
+            </div>
+
+            <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
+              <div class="flex items-center space-x-1 text-slate-500 text-[10px] font-bold">
+                <i data-lucide="bot" class="w-3 h-3 text-sky-600"></i>
+                <span>Auto-Eligible</span>
+              </div>
+              <div class="text-xl font-extrabold text-slate-900 mt-1">19</div>
+              <div class="text-[10px] text-slate-400 font-medium">74% of actions</div>
+            </div>
+          </div>
+
+          <!-- Filter Pills & Search Bar -->
+          <div class="space-y-2">
+            <div class="flex overflow-x-auto gap-1.5 pb-1 no-scrollbar text-xs">
+              <button class="px-3 py-1.5 rounded-full bg-sky-600 text-white font-bold whitespace-nowrap shadow-sm">All</button>
+              <button class="px-3 py-1.5 rounded-full bg-white text-slate-600 font-medium border border-slate-200 whitespace-nowrap">Payment Failures</button>
+              <button class="px-3 py-1.5 rounded-full bg-white text-slate-600 font-medium border border-slate-200 whitespace-nowrap">Subscriptions</button>
+              <button class="px-3 py-1.5 rounded-full bg-white text-slate-600 font-medium border border-slate-200 whitespace-nowrap">Checkout Abandonment</button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div class="relative flex-1">
+                <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
+                <input type="text" placeholder="Search queue..." class="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-1.5 text-xs font-medium focus:outline-none focus:border-sky-500">
+              </div>
+              <button class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 flex items-center gap-1 shadow-sm">
+                <span>Sort: Priority</span>
+                <i data-lucide="arrow-down" class="w-3 h-3"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Featured Alert Highlight Card (RP_83921) -->
+          <div class="bg-sky-50/80 border border-sky-200 rounded-2xl p-3.5 space-y-2 relative overflow-hidden shadow-sm">
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-sky-600"></div>
+            <div class="flex items-center justify-between ml-1">
+              <div class="flex items-center space-x-2">
+                <span class="font-extrabold text-slate-900 text-xs">RP_83921</span>
+                <span class="bg-amber-100 text-amber-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md">HIGH PRIORITY</span>
+              </div>
+              <span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Ready
+              </span>
+            </div>
+
+            <div class="ml-1 text-xs text-slate-700 font-medium space-y-0.5">
+              <p class="font-bold text-slate-900">₹8,499 · UPI Timeout · Prob: 87%</p>
+              <p class="text-sky-600 font-extrabold">Potential Recovery: ₹7,394</p>
+              <p class="text-slate-600">Rec: Delayed retry · 15 min</p>
+            </div>
+
+            <div class="flex items-center justify-between pt-1 ml-1">
+              <a href="#" class="text-[11px] font-bold text-sky-600 hover:underline">View methodology →</a>
+              <button onclick="openIncidentModal('upi_degradation')" class="bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow transition flex items-center gap-1">
+                <span>Review</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- List Header -->
+          <div class="flex items-center justify-between pt-1">
+            <h3 class="text-sm font-extrabold text-slate-900">AI Recovery Queue</h3>
+            <span class="text-[10px] text-slate-400 font-medium">Ranked by recoverable revenue</span>
+          </div>
+
+          <!-- Screen 2 Transactions Queue List -->
+          <div class="space-y-2.5" id="queue-list-container">
+            
+            <!-- Item 1: RP_83921 -->
+            <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm relative overflow-hidden flex flex-col space-y-2">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-sky-600"></div>
+              <div class="flex items-center justify-between ml-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-extrabold text-slate-900 text-xs">RP_83921</span>
+                  <span class="bg-amber-100 text-amber-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md">HIGH PRIORITY</span>
+                </div>
+                <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 border border-emerald-100">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Ready
+                </span>
+              </div>
+              <div class="ml-1 text-xs space-y-0.5">
+                <p class="font-bold text-slate-900">₹8,499 · UPI Timeout · Prob: 87%</p>
+                <p class="text-sky-600 font-extrabold">Potential Recovery: ₹7,394</p>
+                <p class="text-slate-600">Rec: Delayed retry · 15 min</p>
+              </div>
+              <div class="flex justify-end ml-1">
+                <button onclick="openIncidentModal()" class="bg-sky-600 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1 shadow">
+                  <span>Review</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Item 2: RP_83922 -->
+            <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm relative overflow-hidden flex flex-col space-y-2">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-amber-500"></div>
+              <div class="flex items-center justify-between ml-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-extrabold text-slate-900 text-xs">RP_83922</span>
+                  <span class="bg-amber-100 text-amber-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md">HIGH PRIORITY</span>
+                </div>
+                <span class="bg-amber-50 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 border border-amber-100">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Awaiting approval
+                </span>
+              </div>
+              <div class="ml-1 text-xs space-y-0.5">
+                <p class="font-bold text-slate-900">₹3,200 · Card Decline · Prob: 72%</p>
+                <p class="text-sky-600 font-extrabold">Potential Recovery: ₹2,304</p>
+                <p class="text-slate-600">Rec: Send payment link</p>
+              </div>
+              <div class="flex justify-end ml-1">
+                <button onclick="openIncidentModal()" class="bg-sky-600 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1 shadow">
+                  <span>Review</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Item 3: RP_83923 -->
+            <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm relative overflow-hidden flex flex-col space-y-2">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
+              <div class="flex items-center justify-between ml-1">
+                <span class="font-extrabold text-slate-900 text-xs">RP_83923</span>
+                <span class="bg-red-50 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 border border-red-100">
+                  <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Escalated
+                </span>
+              </div>
+              <div class="ml-1 text-xs space-y-0.5">
+                <p class="font-bold text-amber-600">₹24,999 · Repeated Payment Failure · Prob: 31%</p>
+                <p class="text-sky-600 font-extrabold">Potential Recovery: ₹7,750</p>
+                <p class="text-slate-600">Rec: Do not retry <span class="text-slate-400 text-[10px]">(Exceeded safe retry threshold)</span></p>
+              </div>
+              <div class="flex justify-end ml-1">
+                <button onclick="openIncidentModal()" class="bg-transparent border border-slate-300 text-slate-700 font-bold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1 hover:bg-slate-50">
+                  <span>View</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Item 4: RP_83924 -->
+            <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm relative overflow-hidden flex flex-col space-y-2">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-sky-600"></div>
+              <div class="flex items-center justify-between ml-1">
+                <span class="font-extrabold text-slate-900 text-xs">RP_83924</span>
+                <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 border border-emerald-100">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Ready
+                </span>
+              </div>
+              <div class="ml-1 text-xs space-y-0.5">
+                <p class="font-bold text-slate-900">₹12,500 · Checkout Abandoned · Prob: 79%</p>
+                <p class="text-sky-600 font-extrabold">Potential Recovery: ₹9,875</p>
+                <p class="text-slate-600">Rec: Send recovery link</p>
+              </div>
+              <div class="flex justify-end ml-1">
+                <button onclick="openIncidentModal()" class="bg-sky-600 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1 shadow">
+                  <span>Review</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Item 5: RP_83925 -->
+            <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm relative overflow-hidden flex flex-col space-y-2">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-sky-600"></div>
+              <div class="flex items-center justify-between ml-1">
+                <span class="font-extrabold text-slate-900 text-xs">RP_83925</span>
+                <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 border border-emerald-100">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Ready
+                </span>
+              </div>
+              <div class="ml-1 text-xs space-y-0.5">
+                <p class="font-bold text-slate-900">₹6,800 · Subscription Renewal Failed · Prob: 83%</p>
+                <p class="text-sky-600 font-extrabold">Potential Recovery: ₹5,644</p>
+                <p class="text-slate-600">Rec: Retry mandate</p>
+              </div>
+              <div class="flex justify-end ml-1">
+                <button onclick="openIncidentModal()" class="bg-sky-600 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1 shadow">
+                  <span>Review</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tab: INSIGHTS -->
+        <div id="tab-insights" class="hidden space-y-4">
+          <h2 class="text-lg font-bold text-slate-900">AI Diagnostics & Accuracy</h2>
+          <div class="bg-white p-4 rounded-2xl border border-slate-100 space-y-3">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Track 03 Benchmark Evaluation</h3>
+            <div class="grid grid-cols-2 gap-3 text-center">
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <p class="text-2xl font-extrabold text-emerald-600">94.2%</p>
+                <p class="text-[11px] text-slate-500 font-medium mt-1">Intervention Accuracy</p>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <p class="text-2xl font-extrabold text-sky-600">₹21.4L</p>
+                <p class="text-[11px] text-slate-500 font-medium mt-1">Closed-Loop Recovery</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: SETTINGS -->
+        <div id="tab-settings" class="hidden space-y-4">
+          <h2 class="text-lg font-bold text-slate-900">Recovery Safety Controls</h2>
+          <div class="bg-white p-4 rounded-2xl border border-slate-100 space-y-4">
+            <div>
+              <label class="text-xs font-bold text-slate-700 block">Max Recovery Discount Cap (%)</label>
+              <input type="number" value="5" class="w-full mt-1 border border-slate-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-800">
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Bottom Floating Navigation Bar -->
+      <nav class="bottom-nav">
+        <button onclick="switchTab('overview')" id="nav-overview" class="nav-item active">
+          <i data-lucide="layout-grid" class="w-4 h-4 mb-0.5"></i>
+          <span>Overview</span>
+        </button>
+
+        <button onclick="switchTab('queue')" id="nav-queue" class="nav-item">
+          <i data-lucide="list-checks" class="w-4 h-4 mb-0.5"></i>
+          <span>Queue</span>
+        </button>
+
+        <button onclick="switchTab('insights')" id="nav-insights" class="nav-item">
+          <i data-lucide="sparkles" class="w-4 h-4 mb-0.5"></i>
+          <span>Insights</span>
+        </button>
+
+        <button onclick="switchTab('settings')" id="nav-settings" class="nav-item">
+          <i data-lucide="settings" class="w-4 h-4 mb-0.5"></i>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- Incident Review Modal -->
+  <div id="incident-modal" class="modal-overlay hidden">
+    <div class="modal-content p-5 space-y-4">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">INCIDENT DRILLDOWN</span>
+          <h3 class="text-base font-extrabold text-slate-900 mt-1" id="modal-title">UPI Payment Success Drop</h3>
+        </div>
+        <button onclick="closeIncidentModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+        <p class="font-bold text-slate-800">Root Cause Diagnosis:</p>
+        <p class="text-slate-600" id="modal-root-cause">ICICI & HDFC UPI switch degraded in last 60 minutes.</p>
+      </div>
+
+      <button onclick="triggerAIRecovery()" id="btn-trigger-action" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
+        <span>Execute Bounded AI Recovery Sequence</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript scripts -->
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

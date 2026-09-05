@@ -1,0 +1,121 @@
+{
+  "dataset_rows": 8000,
+  "positive_rate": 0.3987,
+  "split": {
+    "train": 5599,
+    "validation": 1201,
+    "test": 1200
+  },
+  "models": {
+    "logistic_regression": {
+      "validation": {
+        "precision": 0.6504,
+        "recall": 0.6409,
+        "f1": 0.6456,
+        "roc_auc": 0.7748,
+        "confusion_matrix": [
+          [
+            557,
+            165
+          ],
+          [
+            172,
+            307
+          ]
+        ],
+        "false_positive_cost": 14237.98
+      },
+      "test": {
+        "precision": 0.6275,
+        "recall": 0.6485,
+        "f1": 0.6379,
+        "roc_auc": 0.7716,
+        "confusion_matrix": [
+          [
+            538,
+            184
+          ],
+          [
+            168,
+            310
+          ]
+        ],
+        "false_positive_cost": 15508.63
+      }
+    },
+    "random_forest": {
+      "validation": {
+        "precision": 0.6482,
+        "recall": 0.5616,
+        "f1": 0.6018,
+        "roc_auc": 0.7595,
+        "confusion_matrix": [
+          [
+            576,
+            146
+          ],
+          [
+            210,
+            269
+          ]
+        ],
+        "false_positive_cost": 12809.42
+      },
+      "test": {
+        "precision": 0.6553,
+        "recall": 0.5649,
+        "f1": 0.6067,
+        "roc_auc": 0.7698,
+        "confusion_matrix": [
+          [
+            580,
+            142
+          ],
+          [
+            208,
+            270
+          ]
+        ],
+        "false_positive_cost": 11862.12
+      }
+    },
+    "xgboost": {
+      "validation": {
+        "precision": 0.6847,
+        "recall": 0.476,
+        "f1": 0.5616,
+        "roc_auc": 0.7715,
+        "confusion_matrix": [
+          [
+            617,
+            105
+          ],
+          [
+            251,
+            228
+          ]
+        ],
+        "false_positive_cost": 8831.68
+      },
+      "test": {
+        "precision": 0.6765,
+        "recall": 0.4812,
+        "f1": 0.5623,
+        "roc_auc": 0.7647,
+        "confusion_matrix": [
+          [
+            612,
+            110
+          ],
+          [
+            248,
+            230
+          ]
+        ],
+        "false_positive_cost": 8479.19
+      }
+    }
+  },
+  "selected_model": "xgboost",
+  "selection_reason": "Selected using a revenue-recovery score that weights F1, ROC-AUC, precision, recall, and penalizes false-positive recovery costs instead of accuracy alone."
+}
